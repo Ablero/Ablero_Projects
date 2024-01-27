@@ -1,0 +1,76 @@
+import pygame
+from pygame.locals import *
+from OpenGL.GL import *
+from OpenGL.GLU import *
+
+pygame.init()
+
+display = (800, 600)
+pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+pygame.display.set_caption("3D Diamond - Outlines")
+
+gluPerspective(70, (display[0] / display[1]), 0.1, 50.0)
+glTranslatef(0, 0, -5)
+
+def draw_diamond():
+    glBegin(GL_LINE_STRIP)
+
+    glColor3f(1, 1, 1)  # Set the outline color to white
+
+    glVertex3f(-0.5, -0.5, -0.5)
+    glVertex3f(0.0, 0.5, 0.0)
+    glVertex3f(0.5, -0.5, 0.5)
+    glVertex3f(0.0, -1.5, 0.0)
+    glVertex3f(-0.5, -0.5, -0.5)
+
+    glVertex3f(0.5, -0.5, -0.5)
+    glVertex3f(0.0, 0.5, 0.0)
+    glVertex3f(0.5, -0.5, 0.5)
+    glVertex3f(0.0, -1.5, 0.0)
+    glVertex3f(-0.5, -0.5, -0.5)
+
+    glVertex3f(0.5, -0.5, -0.5)
+    glVertex3f(0.0, 0.5, 0.0)
+    glVertex3f(-0.5, -0.5, 0.5)
+    glVertex3f(0.0, -1.5, 0.0)
+    glVertex3f(0.5, -0.5, -0.5)
+
+    glEnd()
+
+scale_factor = 1
+rotation_speed = -0.1
+rotation_acceleration = 0.1
+
+x, y, z = 0.0, 0.0, 0.0
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_d:
+                glTranslatef(1, 0, -1)
+            if event.key == pygame.K_a:
+                glTranslatef(-1, 0, 1)
+            if event.key == pygame.K_s:
+                 glTranslatef(0, -1, 0)
+            if event.key == pygame.K_w:
+                glTranslatef(0, 1, 0)
+            if event.key == pygame.K_UP:
+                rotation_speed += 0.1
+            if event.key == pygame.K_DOWN:
+                rotation_speed -= 0.1
+            if event.key == pygame.K_SPACE:
+                scale_factor += 0.1
+            if event.key == pygame.K_RIGHT:
+                 rotation_speed += rotation_acceleration
+            if event.key == pygame.K_LEFT:
+                 rotation_speed -= rotation_acceleration
+                
+    glRotatef(1 * rotation_speed, 0, 1, 0)
+    glTranslatef(x, y, z)
+    glScalef(scale_factor, scale_factor, scale_factor)
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    draw_diamond()
+    pygame.display.flip()
