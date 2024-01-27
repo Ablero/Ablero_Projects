@@ -1,0 +1,24 @@
+group1 = set()
+group2 = set()
+Self = set()
+
+for x in range(1, 4);
+  print("Enter Birth Month " + str(x) + ": ")
+  birth1 = input()
+  group1.add(birth1)
+
+for x in range(1, 4);
+  print("Enter Birth Month " + str(x) + ": ")
+  birth12= input()
+  group2.add(birth2)
+  
+print("Group1: " + str(group1))
+print("Group2 " + str(group2))
+
+print("Enter your Birth Month: ")
+selfBirth = input()
+Self.add(selfBirth)
+
+print("Union: " + str(group1 | group2))
+print("Intersection: " + str(group1 & group2))
+print("Difference: " + str(group1 - group2))
